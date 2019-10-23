@@ -1,15 +1,14 @@
 package tddmicroexercises.tirepressuremonitoringsystem;
 
 public class Alarm {
-
-    private static final PressureThreshold DEFAULT_THRESHOLD = new PressureThreshold(17, 21);
-    private static final PressureSensor DEFAULT_PRESSURE_SENSOR = new TirePressureSensor();
-
     private PressureSensor pressureSensor;
     private PressureThreshold pressureThreshold;
 
+    /**
+     * Set default implementations
+     */
     public Alarm() {
-        this(DEFAULT_PRESSURE_SENSOR, DEFAULT_THRESHOLD);
+        this(new RandomPressureSensor(), new PressureThreshold(17, 21));
     }
 
     public Alarm(PressureSensor pressureSensor, PressureThreshold pressureThreshold) {
