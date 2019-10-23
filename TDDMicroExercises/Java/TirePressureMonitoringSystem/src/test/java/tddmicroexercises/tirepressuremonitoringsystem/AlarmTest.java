@@ -1,12 +1,14 @@
 package tddmicroexercises.tirepressuremonitoringsystem;
 
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
 
 public class AlarmTest {
+
     @Test
     public void check() throws Exception {
+        assertThat("test").isEmpty();
     }
 
 }
