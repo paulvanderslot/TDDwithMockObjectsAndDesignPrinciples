@@ -1,6 +1,6 @@
 package tddmicroexercises.tirepressuremonitoringsystem.somedependencies;
 
-import tddmicroexercises.tirepressuremonitoringsystem.Sensor;
+import tddmicroexercises.tirepressuremonitoringsystem.TirePressureSensor;
 
 public class ASensorClient
 {
@@ -9,7 +9,7 @@ public class ASensorClient
 
     public ASensorClient()
     {
-        Sensor sensor = new Sensor();
+        TirePressureSensor sensor = new TirePressureSensor();
 
         double value = sensor.popNextPressurePsiValue();
         value = sensor.popNextPressurePsiValue();
