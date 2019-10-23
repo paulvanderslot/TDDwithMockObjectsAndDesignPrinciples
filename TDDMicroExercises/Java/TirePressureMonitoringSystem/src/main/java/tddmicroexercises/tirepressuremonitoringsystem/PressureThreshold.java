@@ -2,8 +2,8 @@ package tddmicroexercises.tirepressuremonitoringsystem;
 
 public class PressureThreshold {
 
-    private double lowBoundary;
-    private double highBoundary;
+    private final double lowBoundary;
+    private final double highBoundary;
 
     PressureThreshold(double lowBoundary, double highBoundary) {
         this.lowBoundary = lowBoundary;

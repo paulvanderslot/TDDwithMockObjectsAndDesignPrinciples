@@ -20,9 +20,7 @@ public class Alarm {
     }
 
     public void check() {
-        if (pressureThreshold.isOutOfBounds(pressureSensor.popNextPressurePsiValue())) {
-            alarmOn = true;
-        }
+        alarmOn = pressureThreshold.isOutOfBounds(pressureSensor.popNextPressurePsiValue());
     }
 
     public boolean isAlarmOn() {

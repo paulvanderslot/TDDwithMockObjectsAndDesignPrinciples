@@ -56,4 +56,31 @@ public class AlarmTest {
         assertThat(alarm.isAlarmOn()).isFalse();
     }
 
+    @Test
+    public void whenPressureVariates_alarmCanGetOff() throws Exception {
+        Alarm alarm = new Alarm(sensorWithFirstInvalidThenValidPressure(), threshold);
+
+        alarm.check();
+        assertThat(alarm.isAlarmOn()).isTrue();
+
+        alarm.check();
+        assertThat(alarm.isAlarmOn()).isFalse();
+    }
+
+    private PressureSensor sensorWithFirstInvalidThenValidPressure() {
+        return new PressureSensor() {
+            boolean hasBeenCalled = false;
+
+            @Override
+            public double popNextPressurePsiValue() {
+                if (hasBeenCalled) {
+                    return HIGH_PRESSURE_BOUNDARY - 1;
+                }
+
+                hasBeenCalled = true;
+                return HIGH_PRESSURE_BOUNDARY + 1;
+            }
+        };
+    }
+
 }
