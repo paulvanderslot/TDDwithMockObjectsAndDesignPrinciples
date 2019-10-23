@@ -20,7 +20,6 @@ public class AlarmTest {
     public void whenPressureTooLow_alarmIsOn() throws Exception {
         Alarm alarm = new Alarm(() -> LOW_PRESSURE_BOUNDARY - 1, threshold);
 
-        alarm.check();
         assertThat(alarm.isAlarmOn()).isTrue();
     }
 
@@ -28,7 +27,6 @@ public class AlarmTest {
     public void whenPressureTooHigh_alarmIsOn() throws Exception {
         Alarm alarm = new Alarm(() -> HIGH_PRESSURE_BOUNDARY + 1, threshold);
 
-        alarm.check();
         assertThat(alarm.isAlarmOn()).isTrue();
     }
 
@@ -36,7 +34,6 @@ public class AlarmTest {
     public void whenPressureIsLowerLimit_alarmIsOff() throws Exception {
         Alarm alarm = new Alarm(() -> LOW_PRESSURE_BOUNDARY, threshold);
 
-        alarm.check();
         assertThat(alarm.isAlarmOn()).isFalse();
     }
 
@@ -44,7 +41,6 @@ public class AlarmTest {
     public void whenPressureIsUpperLimit_alarmIsOff() throws Exception {
         Alarm alarm = new Alarm(() -> HIGH_PRESSURE_BOUNDARY, threshold);
 
-        alarm.check();
         assertThat(alarm.isAlarmOn()).isFalse();
     }
 
@@ -52,7 +48,6 @@ public class AlarmTest {
     public void whenPressureIsInBetween_alarmIsOff() throws Exception {
         Alarm alarm = new Alarm(() -> HIGH_PRESSURE_BOUNDARY - 1, threshold);
 
-        alarm.check();
         assertThat(alarm.isAlarmOn()).isFalse();
     }
 
@@ -60,10 +55,7 @@ public class AlarmTest {
     public void whenPressureVariates_alarmCanGetOff() throws Exception {
         Alarm alarm = new Alarm(sensorWithFirstInvalidThenValidPressure(), threshold);
 
-        alarm.check();
         assertThat(alarm.isAlarmOn()).isTrue();
-
-        alarm.check();
         assertThat(alarm.isAlarmOn()).isFalse();
     }
 

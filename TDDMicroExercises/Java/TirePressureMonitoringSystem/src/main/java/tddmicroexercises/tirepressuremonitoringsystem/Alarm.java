@@ -5,8 +5,6 @@ public class Alarm {
     private static final PressureThreshold DEFAULT_THRESHOLD = new PressureThreshold(17, 21);
     private static final PressureSensor DEFAULT_PRESSURE_SENSOR = new TirePressureSensor();
 
-    private boolean alarmOn = false;
-
     private PressureSensor pressureSensor;
     private PressureThreshold pressureThreshold;
 
@@ -19,11 +17,7 @@ public class Alarm {
         this.pressureThreshold = pressureThreshold;
     }
 
-    public void check() {
-        alarmOn = pressureThreshold.isOutOfBounds(pressureSensor.popNextPressurePsiValue());
-    }
-
     public boolean isAlarmOn() {
-        return alarmOn;
+        return pressureThreshold.isOutOfBounds(pressureSensor.popNextPressurePsiValue());
     }
 }
