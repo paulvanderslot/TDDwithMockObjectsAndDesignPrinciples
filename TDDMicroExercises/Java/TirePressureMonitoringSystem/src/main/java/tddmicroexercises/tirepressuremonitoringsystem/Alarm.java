@@ -17,6 +17,7 @@ public class Alarm {
     }
 
     public boolean isAlarmOn() {
-        return pressureThreshold.isOutOfBounds(pressureSensor.popNextPressurePsiValue());
+        double currentPressure = pressureSensor.popNextPressurePsiValue();
+        return pressureThreshold.isOutOfBounds(currentPressure);
     }
 }

@@ -18,39 +18,47 @@ public class AlarmTest {
 
     @Test
     public void whenPressureTooLow_alarmIsOn() throws Exception {
-        Alarm alarm = new Alarm(() -> LOW_PRESSURE_BOUNDARY - 1, threshold);
+        PressureSensor pressureTooLow = () -> LOW_PRESSURE_BOUNDARY - 1;
+        Alarm alarm = new Alarm(pressureTooLow, threshold);
 
         assertThat(alarm.isAlarmOn()).isTrue();
     }
 
     @Test
     public void whenPressureTooHigh_alarmIsOn() throws Exception {
-        Alarm alarm = new Alarm(() -> HIGH_PRESSURE_BOUNDARY + 1, threshold);
+        PressureSensor pressureTooHigh = () -> HIGH_PRESSURE_BOUNDARY + 1;
+        Alarm alarm = new Alarm(pressureTooHigh, threshold);
 
         assertThat(alarm.isAlarmOn()).isTrue();
     }
 
     @Test
     public void whenPressureIsLowerLimit_alarmIsOff() throws Exception {
-        Alarm alarm = new Alarm(() -> LOW_PRESSURE_BOUNDARY, threshold);
+        PressureSensor pressureLowerLimit = () -> LOW_PRESSURE_BOUNDARY;
+        Alarm alarm = new Alarm(pressureLowerLimit, threshold);
 
         assertThat(alarm.isAlarmOn()).isFalse();
     }
 
     @Test
     public void whenPressureIsUpperLimit_alarmIsOff() throws Exception {
-        Alarm alarm = new Alarm(() -> HIGH_PRESSURE_BOUNDARY, threshold);
+        PressureSensor pressureUpperLimit = () -> HIGH_PRESSURE_BOUNDARY;
+        Alarm alarm = new Alarm(pressureUpperLimit, threshold);
 
         assertThat(alarm.isAlarmOn()).isFalse();
     }
 
     @Test
     public void whenPressureIsInBetween_alarmIsOff() throws Exception {
-        Alarm alarm = new Alarm(() -> HIGH_PRESSURE_BOUNDARY - 1, threshold);
+        PressureSensor pressureOk = () -> HIGH_PRESSURE_BOUNDARY - 1;
+        Alarm alarm = new Alarm(pressureOk, threshold);
 
         assertThat(alarm.isAlarmOn()).isFalse();
     }
 
+    /**
+     * Behaviour is changed! Or is the alarm not supposed to get off?
+     */
     @Test
     public void whenPressureVariates_alarmCanGetOff() throws Exception {
         Alarm alarm = new Alarm(sensorWithFirstInvalidThenValidPressure(), threshold);
@@ -61,16 +69,19 @@ public class AlarmTest {
 
     private PressureSensor sensorWithFirstInvalidThenValidPressure() {
         return new PressureSensor() {
+            private static final double PRESSURE_OK = HIGH_PRESSURE_BOUNDARY - 1;
+            private static final double PRESSURE_NOT_OK = HIGH_PRESSURE_BOUNDARY + 1;
+
             boolean hasBeenCalled = false;
 
             @Override
             public double popNextPressurePsiValue() {
                 if (hasBeenCalled) {
-                    return HIGH_PRESSURE_BOUNDARY - 1;
+                    return PRESSURE_OK;
                 }
 
                 hasBeenCalled = true;
-                return HIGH_PRESSURE_BOUNDARY + 1;
+                return PRESSURE_NOT_OK;
             }
         };
     }
