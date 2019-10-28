@@ -10,7 +10,7 @@ public class PressureThreshold {
         this.highBoundary = highBoundary;
     }
 
-    boolean isOutOfBounds(double psiPressureValue) {
-        return psiPressureValue < lowBoundary || highBoundary < psiPressureValue;
+    boolean isOutOfBounds(double pressure) {
+        return pressure < lowBoundary || highBoundary < pressure;
     }
 }

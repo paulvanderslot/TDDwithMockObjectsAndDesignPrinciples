@@ -57,33 +57,31 @@ public class AlarmTest {
     }
 
     /**
-     * Behaviour is changed! Or is the alarm not supposed to get off?
+     * Behaviour is changed! Or is the alarm not supposed to turn off?
      */
     @Test
-    public void whenPressureVariates_alarmCanGetOff() throws Exception {
-        Alarm alarm = new Alarm(sensorWithFirstInvalidThenValidPressure(), threshold);
+    public void whenPressureVariates_alarmCanTurnOff() throws Exception {
+        Alarm alarm = new Alarm(new SensorWithFirstInvalidThenValidPressure(), threshold);
 
         assertThat(alarm.isAlarmOn()).isTrue();
         assertThat(alarm.isAlarmOn()).isFalse();
     }
 
-    private PressureSensor sensorWithFirstInvalidThenValidPressure() {
-        return new PressureSensor() {
-            private static final double PRESSURE_OK = HIGH_PRESSURE_BOUNDARY - 1;
-            private static final double PRESSURE_NOT_OK = HIGH_PRESSURE_BOUNDARY + 1;
+    private static class SensorWithFirstInvalidThenValidPressure implements PressureSensor {
+        private static final double PRESSURE_OK = HIGH_PRESSURE_BOUNDARY - 1;
+        private static final double PRESSURE_NOT_OK = HIGH_PRESSURE_BOUNDARY + 1;
 
-            boolean hasBeenCalled = false;
+        private boolean hasBeenCalled = false;
 
-            @Override
-            public double popNextPressurePsiValue() {
-                if (hasBeenCalled) {
-                    return PRESSURE_OK;
-                }
-
-                hasBeenCalled = true;
-                return PRESSURE_NOT_OK;
+        @Override
+        public double popNextPressurePsiValue() {
+            if (hasBeenCalled) {
+                return PRESSURE_OK;
             }
-        };
-    }
+
+            hasBeenCalled = true;
+            return PRESSURE_NOT_OK;
+        }
+    };
 
 }
