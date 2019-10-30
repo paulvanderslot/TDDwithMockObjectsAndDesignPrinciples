@@ -6,7 +6,7 @@ import org.apache.commons.lang3.StringEscapeUtils;
 
 public class UnicodeTextToHtmlConverter {
     private static final String LINE_BREAK = "<br />";
-    private Reader reader;
+    private final Reader reader;
 
     public UnicodeTextToHtmlConverter(Reader reader) {
         this.reader = reader;
